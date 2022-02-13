@@ -16,7 +16,7 @@ export interface Movie {
   genres: string[];
   runtime?: number;
   cast: string[];
-  poster?: string;
+  poster: string;
   title: string;
   fullplot?: string;
   languages?: string[];
