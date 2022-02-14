@@ -9,9 +9,6 @@ axios.interceptors.response.use(
   (res: AxiosResponse) => {
     if (res && res.data.data.movie) {
       res.data = res.data.data.movie;
-      if (!res.data.movie.poster) {
-        res.data.movie.poster = '/public/images/2084555.jpg'
-      }
       return res;
     }
 
