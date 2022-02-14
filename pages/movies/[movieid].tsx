@@ -1,22 +1,41 @@
+/* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-one-expression-per-line */
+import { Dialog, Transition } from '@headlessui/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import React, { Fragment, ReactElement, useState } from 'react';
 import { MdStars } from 'react-icons/md';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import DeleteModal from '../../components/modals/DeleteModal';
 import { Movie } from '../../src/types/types';
-import { useMovieApi } from '../../src/utils/Api';
+import { movieApi, useMovieApi } from '../../src/utils/Api';
 
 function MovieDetails(): ReactElement {
   const {
-    pathname,
-    query: { movieId },
     back,
     asPath,
+    push,
+    replace,
   } = useRouter();
 
-  const [movie] = useMovieApi<Movie>(`/${asPath.slice(7)}`);
+  const movieId = asPath.slice(7);
+  console.log(movieId)
+
+  const [movie] = useMovieApi<Movie>(`${movieId}`);
+  const [isOpen, setIsOpen] = useState(false);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  const onDelete = () => {
+    movieApi('delete', `/${movieId}`, () => push('/movies'));
+  };
 
   if (!movie) return <LoadingSpinner />;
 
@@ -69,15 +88,38 @@ function MovieDetails(): ReactElement {
                 : `Director: ${movie.directors}`}
             </h2>
             <h2>{`Cast: ${movie.cast.join(', ')}`}</h2>
-            <button
-              type="button"
-              className="btn mx-auto mt-8 flex"
-              onClick={() => back()}
-            >
-              Back
-            </button>
+            <div className="flex flex-row justify-center">
+              <button
+                type="button"
+                className="btn mx-auto mt-8 flex"
+                onClick={() => back()}
+              >
+                Back
+              </button>
+              <button
+                type="button"
+                className="btn mx-auto mt-8 flex"
+                onClick={openModal}
+              >
+                Delete
+              </button>
+            </div>
           </div>
         </div>
+
+        <Transition appear show={isOpen} as={Fragment}>
+          <Dialog
+            as="div"
+            className="fixed inset-0 z-10 overflow-y-auto"
+            onClose={closeModal}
+          >
+            <DeleteModal
+              openModal={openModal}
+              closeModal={closeModal}
+              onDelete={onDelete}
+            />
+          </Dialog>
+        </Transition>
       </main>
     </div>
   );
