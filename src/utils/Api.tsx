@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-self-assign */
 import axios, { AxiosResponse, Method } from 'axios';
-import { Dispatch, SetStateAction } from 'react';
-import useSWR from 'swr';
+import { useDebugValue } from 'react';
+import useSWR, { KeyedMutator } from 'swr';
 import { Movie } from '../types/types';
 
 // *** Check if Movie or Movie[] and transform data property
@@ -15,7 +15,13 @@ axios.interceptors.response.use(
 
     if (res && res.data.data.movies) {
       res.data = res.data.data.movies;
-      res.data = res.data.filter((movie: Movie) => movie.poster !== undefined);
+      // res.data = res.data.filter((movie: Movie) => movie.poster !== undefined);
+      res.data = res.data.map((movie: Movie) => {
+        if (!movie.poster) {
+          movie.poster = '/images/2084555.jpg'
+        }
+        return movie;
+      });
       return res;
     }
 
@@ -48,12 +54,13 @@ export async function fetcher(path: string) {
     method: 'GET',
     url: `${baseUrl}/${path}`,
   }).then((resp) => resp.data);
-
 }
 
 export function useMovieApi<T>(
   path: string,
-): [T | undefined] {
-  const { data } = useSWR(path, fetcher);
-  return [data];
+  swr = {},
+): [T | undefined, KeyedMutator<T>] {
+  const { data, mutate } = useSWR(path, fetcher, swr);
+  useDebugValue(data)
+  return [data, mutate];
 }
