@@ -10,12 +10,15 @@ axios.interceptors.response.use(
   (res: AxiosResponse) => {
     if (res && res.data.data.movie) {
       res.data = res.data.data.movie;
+      if (!res.data.poster) {
+        res.data.poster = '/images/2084555.jpg';
+      }
+    
       return res;
     }
 
     if (res && res.data.data.movies) {
       res.data = res.data.data.movies;
-      // res.data = res.data.filter((movie: Movie) => movie.poster !== undefined);
       res.data = res.data.map((movie: Movie) => {
         if (!movie.poster) {
           movie.poster = '/images/2084555.jpg'

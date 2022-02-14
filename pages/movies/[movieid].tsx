@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import Head from 'next/head';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -9,11 +10,13 @@ import { useMovieApi } from '../../src/utils/Api';
 
 function MovieDetails(): ReactElement {
   const {
+    pathname,
     query: { movieId },
     back,
+    asPath,
   } = useRouter();
 
-  const [movie] = useMovieApi<Movie>(`/${movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${asPath.slice(7)}`);
 
   if (!movie) return <LoadingSpinner />;
 
@@ -56,8 +59,7 @@ function MovieDetails(): ReactElement {
                   : `Genre: ${movie.genres}`}
               </p>
               <p className="text-sm font-light italic">
-                Released:
-                {movie.year}
+                Released: {movie.year}
               </p>
             </div>
             <p className="mt-8 font-medium">{movie.fullplot}</p>
