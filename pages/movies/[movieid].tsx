@@ -13,11 +13,9 @@ function MovieDetails(): ReactElement {
   } = useRouter();
   const router: NextRouter = useRouter()
 
-  if (!movieId) <LoadingSpinner />;
-
   const [movie] = useMovieApi<Movie>(`/${movieId}`);
 
-  if (!movie) return <div>Loading...</div>;
+  if (!movie) return <LoadingSpinner />
 
   const getRatings: () => number[] = (): number[] =>
     Array.from(Array(movie.imdb.rating?.toFixed(3) || 0).keys());
