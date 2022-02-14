@@ -28,7 +28,7 @@ function MovieDetails(): ReactElement {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-12 rounded-lg bg-indigo-100 shadow-lg">
+      <main className="mt-20 rounded-lg bg-indigo-100 shadow-lg">
         <div className="relative flex min-h-fit flex-row justify-between rounded-t-lg">
           <div className="basis-4/12 py-20 pl-20">
             {movie.poster && (
@@ -71,7 +71,7 @@ function MovieDetails(): ReactElement {
             <h2>{`Cast: ${movie.cast.join(', ')}`}</h2>
             <button
               type="button"
-              className="btn mx-auto mt-12 flex"
+              className="btn mx-auto mt-8 flex"
               onClick={() => router.back()}
             >
               Back

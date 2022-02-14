@@ -12,7 +12,7 @@ function MovieCardList({ movies }: Props): ReactElement {
       <div className="flex flex-row flex-wrap justify-around gap-7">
         {movies.map(
           (movie: Movie): ReactElement => (
-            <MovieCardItem movie={movie} />
+            <MovieCardItem key={movie._id} movie={movie} />
           ),
         )}
       </div>
