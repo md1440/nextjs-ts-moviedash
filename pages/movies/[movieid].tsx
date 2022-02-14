@@ -56,7 +56,8 @@ function MovieDetails(): ReactElement {
                   : `Genre: ${movie.genres}`}
               </p>
               <p className="text-sm font-light italic">
-                Released: {movie.year}
+                Released:
+                {movie.year}
               </p>
             </div>
             <p className="mt-8 font-medium">{movie.fullplot}</p>
