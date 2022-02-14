@@ -1,15 +1,19 @@
+/* eslint-disable prefer-const */
 import Head from 'next/head';
 import React, { ReactElement } from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import { Movie } from '../../src/types/types';
-import { useMovieApi, movieApi } from '../../src/utils/Api';
-
+import { movieApi, useMovieApi } from '../../src/utils/Api';
 
 function Random(): ReactElement {
-  const [movies, setMovies] = useMovieApi<Movie[]>('/random');
+  let [movies, mutate] = useMovieApi<Movie[]>('/random', {
+    revalidateIfStale: false,
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
 
-  const randomize = (): void => movieApi('get', '/random', setMovies) 
+
 
   if (!movies) return <LoadingSpinner />;
 
@@ -27,7 +31,7 @@ function Random(): ReactElement {
       <button
         type="button"
         className="btn mx-auto mt-12 flex"
-        onClick={randomize}
+        onClick={() => mutate()}
       >
         Random
       </button>
