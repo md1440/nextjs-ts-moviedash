@@ -1,24 +1,21 @@
 import Head from 'next/head';
 import Image from 'next/image';
 import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { MdStars } from 'react-icons/md';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Movie } from '../../src/types/types';
-import { useMovieApi } from '../../src/utils/Api';
+import { movieApi, useMovieApi } from '../../src/utils/Api';
 
 function MovieDetails(): ReactElement {
   const {
     query: { movieId },
   } = useRouter();
-  const router: NextRouter = useRouter()
+  const router: NextRouter = useRouter();
 
   const [movie] = useMovieApi<Movie>(`/${movieId}`);
 
-  if (!movie) return <LoadingSpinner />
-
-  const getRatings: () => number[] = (): number[] =>
-    Array.from(Array(movie.imdb.rating?.toFixed(3) || 0).keys());
+  if (!movie) return <LoadingSpinner />;
 
   return (
     <div className="font-Poppins">
