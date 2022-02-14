@@ -1,9 +1,8 @@
-import type { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { ReactElement } from 'react';
 
-const Home: NextPage = (): ReactElement => {
+function Home(): ReactElement {
   return (
     <div className="font-Poppins">
       <Head>
@@ -12,20 +11,14 @@ const Home: NextPage = (): ReactElement => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto">
-        <h1 className="mt-12 text-center text-3xl font-extrabold">
-          The Movie Page
+      <main>
+        <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
+          Cool Headline
         </h1>
-        <div className='mt-12'>
-          <Link href="/movies/">
-            <a className='text-lg'>All Movies List</a>
-          </Link>
-        </div>
       </main>
 
-      <footer className="flex"></footer>
     </div>
   );
-};
+}
 
 export default Home;

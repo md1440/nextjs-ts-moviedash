@@ -14,7 +14,7 @@ function Top100Alltime(): ReactElement {
   return (
     <div className="font-Poppins">
       <Head>
-        <title>List of all Movies</title>
+        <title>Top 100 Movies of Alltime</title>
         <meta name="description" content="Top 100 rated Movies of Alltime" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
