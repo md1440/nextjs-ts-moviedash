@@ -1,5 +1,5 @@
 import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, ReactElement, useState } from 'react';
+import { Fragment, ReactElement } from 'react';
 
 interface Props {
   openModal: () => void;
@@ -7,8 +7,7 @@ interface Props {
   onDelete: () => void;
 }
 
-function DeleteModal({openModal, closeModal, onDelete}: Props): ReactElement {
-
+function DeleteModal({ openModal, closeModal, onDelete }: Props): ReactElement {
   return (
     <div className="min-h-screen px-4 text-center">
       <Transition.Child
@@ -36,7 +35,7 @@ function DeleteModal({openModal, closeModal, onDelete}: Props): ReactElement {
         leaveFrom="opacity-100 scale-100"
         leaveTo="opacity-0 scale-95"
       >
-        <div className="my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-2xl bg-slate-50 bg-opacity-55 p-6 text-left align-middle shadow-xl transition-all">
+        <div className="bg-opacity-55 my-8 inline-block w-full max-w-lg transform overflow-hidden rounded-2xl bg-slate-50 p-6 text-left align-middle shadow-xl transition-all">
           <Dialog.Title
             as="h3"
             className="text-lg font-medium leading-6 text-gray-900"
@@ -45,15 +44,15 @@ function DeleteModal({openModal, closeModal, onDelete}: Props): ReactElement {
           </Dialog.Title>
           <div className="mt-3">
             <p className="text-sm text-gray-500">
-              Are you sure you want to delete this movie? This movie
-              will be permanently removed. This action cannot be undone.
+              Are you sure you want to delete this movie? This movie will be
+              permanently removed. This action cannot be undone.
             </p>
           </div>
 
           <div className="mt-5">
             <button
               type="button"
-              className="inline-flex justify-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2 mr-4"
+              className="mr-4 inline-flex justify-center rounded-md border border-transparent bg-indigo-100 px-4 py-2 text-sm font-medium text-indigo-900 hover:bg-indigo-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
               onClick={closeModal}
             >
               Cancel
@@ -72,4 +71,4 @@ function DeleteModal({openModal, closeModal, onDelete}: Props): ReactElement {
   );
 }
 
-export default DeleteModal
+export default DeleteModal;

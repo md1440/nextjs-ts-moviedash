@@ -12,15 +12,9 @@ import { Movie } from '../../src/types/types';
 import { movieApi, useMovieApi } from '../../src/utils/Api';
 
 function MovieDetails(): ReactElement {
-  const {
-    back,
-    asPath,
-    push,
-    replace,
-  } = useRouter();
+  const { back, asPath, push, replace } = useRouter();
 
   const movieId = asPath.slice(7);
-  console.log(movieId)
 
   const [movie] = useMovieApi<Movie>(`${movieId}`);
   const [isOpen, setIsOpen] = useState(false);

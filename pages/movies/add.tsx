@@ -1,7 +1,6 @@
 import React, { ReactElement } from 'react';
 import MovieForm from '../../components/MovieForm';
 
-
 function AddMovie(): ReactElement {
   return (
     <MovieForm
