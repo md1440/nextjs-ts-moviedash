@@ -8,24 +8,26 @@ import { Movie } from '../types/types';
 // *** Check if Movie or Movie[] and transform data property
 axios.interceptors.response.use(
   (res: AxiosResponse) => {
-    if (res && res.data.data.movie) {
-      res.data = res.data.data.movie;
-      if (!res.data.poster) {
-        res.data.poster = '/images/2084555.jpg';
-      }
-    
-      return res;
-    }
-
-    if (res && res.data.data.movies) {
-      res.data = res.data.data.movies;
-      res.data = res.data.map((movie: Movie) => {
-        if (!movie.poster) {
-          movie.poster = '/images/2084555.jpg'
+    if (res.statusText === 'OK') {
+      if (res && res.data.data.movie) {
+        res.data = res.data.data.movie;
+        if (!res.data.poster) {
+          res.data.poster = '/images/2084555.jpg';
         }
-        return movie;
-      });
-      return res;
+
+        return res;
+      }
+
+      if (res && res.data.data.movies) {
+        res.data = res.data.data.movies;
+        res.data = res.data.map((movie: Movie) => {
+          if (!movie.poster) {
+            movie.poster = '/images/2084555.jpg';
+          }
+          return movie;
+        });
+        return res;
+      }
     }
 
     return res;
@@ -64,6 +66,6 @@ export function useMovieApi<T>(
   swr = {},
 ): [T | undefined, KeyedMutator<T>] {
   const { data, mutate } = useSWR(path, fetcher, swr);
-  useDebugValue(data)
+  useDebugValue(data);
   return [data, mutate];
 }
