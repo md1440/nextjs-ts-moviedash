@@ -52,7 +52,7 @@ export async function fetcher(path: string) {
   const baseUrl = 'https://moviedb-rest-api.herokuapp.com/api/v1/movies';
   return axios({
     method: 'GET',
-    url: `${baseUrl}/${path}`,
+    url: `${baseUrl}${path}`,
   }).then((resp) => resp.data);
 }
 
