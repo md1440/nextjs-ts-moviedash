@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-self-assign */
 import axios, { AxiosResponse, Method } from 'axios';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
+import useSWR from 'swr';
 import { Movie } from '../types/types';
 
 // *** Check if Movie or Movie[] and transform data property
@@ -15,7 +16,7 @@ axios.interceptors.response.use(
     if (res && res.data.data.movies) {
       res.data = res.data.data.movies;
       res.data = res.data.filter((movie: Movie) => movie.poster !== undefined);
-      return res
+      return res;
     }
 
     return res;
@@ -41,13 +42,18 @@ export function movieApi<T>(
     .catch();
 }
 
+export async function fetcher(path: string) {
+  const baseUrl = 'https://moviedb-rest-api.herokuapp.com/api/v1/movies';
+  return axios({
+    method: 'GET',
+    url: `${baseUrl}/${path}`,
+  }).then((resp) => resp.data);
+
+}
+
 export function useMovieApi<T>(
   path: string,
-): [T | undefined, Dispatch<SetStateAction<T | undefined>>] {
-  const [data, setData] = useState<T>();
-
-  useEffect((): void => {
-    movieApi('get', `${path}`, setData);
-  }, [path]);
-  return [data, setData];
+): [T | undefined] {
+  const { data } = useSWR(path, fetcher);
+  return [data];
 }
