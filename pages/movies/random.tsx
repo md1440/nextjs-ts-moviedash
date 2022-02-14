@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import { Movie } from '../../src/types/types';
-import { movieApi, useMovieApi } from '../../src/utils/Api';
+import { useMovieApi } from '../../src/utils/Api';
 
 function Random(): ReactElement {
   let [movies, mutate] = useMovieApi<Movie[]>('/random', {
@@ -12,8 +12,6 @@ function Random(): ReactElement {
     revalidateOnFocus: false,
     revalidateOnReconnect: false,
   });
-
-
 
   if (!movies) return <LoadingSpinner />;
 

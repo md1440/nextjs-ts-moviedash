@@ -1,5 +1,4 @@
 import Head from 'next/head';
-import Link from 'next/link';
 import { ReactElement } from 'react';
 
 function Home(): ReactElement {
@@ -16,7 +15,6 @@ function Home(): ReactElement {
           Cool Headline
         </h1>
       </main>
-
     </div>
   );
 }

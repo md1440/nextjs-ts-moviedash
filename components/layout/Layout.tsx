@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import Link from 'next/link';
 import { NextComponentType, NextPageContext } from 'next/types';
 import React, { ReactElement } from 'react';
 import NavBar from './NavBar';

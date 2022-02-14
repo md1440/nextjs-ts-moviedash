@@ -1,17 +1,17 @@
 import Head from 'next/head';
 import Image from 'next/image';
-import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement, useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
+import React, { ReactElement } from 'react';
 import { MdStars } from 'react-icons/md';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import { Movie } from '../../src/types/types';
-import { movieApi, useMovieApi } from '../../src/utils/Api';
+import { useMovieApi } from '../../src/utils/Api';
 
 function MovieDetails(): ReactElement {
   const {
     query: { movieId },
+    back,
   } = useRouter();
-  const router: NextRouter = useRouter();
 
   const [movie] = useMovieApi<Movie>(`/${movieId}`);
 
@@ -69,7 +69,7 @@ function MovieDetails(): ReactElement {
             <button
               type="button"
               className="btn mx-auto mt-8 flex"
-              onClick={() => router.back()}
+              onClick={() => back()}
             >
               Back
             </button>

@@ -4,10 +4,7 @@ import Layout from '../components/layout/Layout';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
-    <Layout Component={Component} pageProps={pageProps} />
-      
-  );
+  return <Layout Component={Component} pageProps={pageProps} />;
 }
 
 export default MyApp;

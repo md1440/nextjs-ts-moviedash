@@ -1,5 +1,5 @@
-import Link from 'next/link';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { ReactElement } from 'react';
 import { MdStars } from 'react-icons/md';
 import { Movie } from '../src/types/types';
@@ -26,9 +26,9 @@ function MovieCardItem({ movie }: Props): ReactElement {
               </p>
               <p className="text-sm font-medium">{movie.imdb.rating}</p>
             </div>
-            <p className="text-sm font-regular ">{movie.year}</p>
+            <p className="font-regular text-sm ">{movie.year}</p>
           </div>
-          <p className="font-light text-sm italic">
+          <p className="text-sm font-light italic">
             {movie.genres.slice(0, 2).join(', ')}
           </p>
         </div>
