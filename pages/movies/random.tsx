@@ -6,7 +6,7 @@ import MovieCardList from '../../components/MovieCardList';
 import { Movie } from '../../src/types/types';
 import { useMovieApi } from '../../src/utils/Api';
 
-function Random(): ReactElement {
+function RandomMovie(): ReactElement {
   let [movies, mutate] = useMovieApi<Movie[]>('/random', {
     revalidateIfStale: false,
     revalidateOnFocus: false,
@@ -37,4 +37,4 @@ function Random(): ReactElement {
   );
 }
 
-export default Random;
+export default RandomMovie;
