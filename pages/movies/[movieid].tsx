@@ -34,7 +34,7 @@ function MovieDetails(): ReactElement {
   }
 
   const onDelete = () => {
-    movieApi('delete', `/${movieId}`, () => push('/movies'));
+    movieApi('delete', `/${movieId}`, () => replace('/movies'));
   };
 
   if (!movie) return <LoadingSpinner />;
