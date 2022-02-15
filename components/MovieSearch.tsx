@@ -45,40 +45,48 @@ function MovieSearch(): ReactElement {
           </span>
         </p>
       </div>
-      <div className="absolute right-6 top-16 z-40 flex w-72 flex-col gap-2 text-[13px] drop-shadow-md">
+      <div className="absolute right-28 top-16 z-40 flex w-72 flex-col gap-2 text-[13px] drop-shadow-md">
         {searchResults &&
-          searchResults.map((movie: Movie) => (
-            <div
-              key={movie._id}
-              onClick={() => onClick(movie)}
-              className="rounded-lg border border-indigo-400 bg-white px-2 py-2 transition-shadow duration-300 ease-in-out hover:bg-indigo-100 focus:ring-4 focus:ring-indigo-300 dark:border-indigo-500 dark:text-indigo-500 dark:hover:bg-indigo-600 dark:hover:text-white dark:focus:ring-indigo-800"
-            >
-              <span className="cursor-pointer border-b">
-                <div className="flex flex-row justify-between">
-                  <h1 className="text-sm font-medium tracking-wider">
-                    {movie.title}
-                  </h1>
-                  <div className="flex flex-row items-center text-sm font-bold">
-                    <p className="mr-1 text-yellow-500">
-                      <MdStars />
-                    </p>
-                    <p className="font-medium">{movie.imdb.rating}</p>
+          searchResults
+            .sort((a: Movie, b: Movie): number => b.year - a.year)
+            .sort((a: Movie, b: Movie): number =>
+              a.imdb.rating && b.imdb.rating
+                ? b.imdb.rating - a.imdb.rating
+                : a.title.length - b.title.length,
+            )
+            .slice(0, 15)
+            .map((movie: Movie) => (
+              <div
+                key={movie._id}
+                onClick={() => onClick(movie)}
+                className="w-96 rounded-lg border border-indigo-400 bg-white px-2 py-2 transition-shadow duration-300 ease-in-out hover:bg-indigo-100 focus:ring-4 focus:ring-indigo-300 dark:border-indigo-500 dark:text-indigo-500 dark:hover:bg-indigo-600 dark:hover:text-white dark:focus:ring-indigo-800"
+              >
+                <span className="cursor-pointer border-b">
+                  <div className="flex flex-row justify-between">
+                    <h1 className="text-sm font-medium tracking-wider">
+                      {movie.title}
+                    </h1>
+                    <div className="flex flex-row items-center text-sm font-bold">
+                      <p className="mr-1 text-yellow-500">
+                        <MdStars />
+                      </p>
+                      <p className="font-medium">{movie.imdb.rating}</p>
+                    </div>
                   </div>
-                </div>
-                <div className="mt-2 flex flex-row items-center justify-between gap-4 text-lg">
-                  <p className="text-sm font-light italic">
-                    {/* Cond Render Singular/Plural */}
-                    {movie.genres.length > 1
-                      ? `Genres: ${movie.genres.join(', ')}`
-                      : `Genre: ${movie.genres}`}
-                  </p>
-                  <p className="text-sm font-light italic">
-                    Released: {movie.year}
-                  </p>
-                </div>
-              </span>
-            </div>
-          ))}
+                  <div className="mt-1 flex flex-row items-center justify-between gap-4 text-lg">
+                    <p className="text-sm font-light italic">
+                      {/* Cond Render Singular/Plural */}
+                      {movie.genres.length > 1
+                        ? `Genres: ${movie.genres.slice(0, 2).join(', ')}`
+                        : `Genre: ${movie.genres}`}
+                    </p>
+                    <p className="text-sm font-light italic">
+                      Released: {movie.year}
+                    </p>
+                  </div>
+                </span>
+              </div>
+            ))}
       </div>
     </div>
   );
