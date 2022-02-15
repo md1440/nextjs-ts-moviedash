@@ -14,19 +14,26 @@ import { movieApi, useMovieApi } from '../../src/utils/Api';
 function MovieDetails(): ReactElement {
   const { back, asPath, push, replace } = useRouter();
 
+  // *** Extracting _id from asPath/Router
   const movieId = asPath.slice(7);
 
+  // *** Get movie api call, useState
   const [movie] = useMovieApi<Movie>(`${movieId}`);
+  // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
 
-  function closeModal() {
+  // *** Modal functionality + blur functionality when Modal isOpen
+  function closeModal(): void {
     setIsOpen(false);
   }
 
-  function openModal() {
+  function openModal(): void {
     setIsOpen(true);
   }
 
+  const modalClassBlur = isOpen ? `font-poppins blur-xl` : `font-poppins`
+
+  // *** Delete funtionality and url change with replace to /movies
   const onDelete = () => {
     movieApi('delete', `/${movieId}`, () => replace('/movies'));
   };
@@ -34,7 +41,7 @@ function MovieDetails(): ReactElement {
   if (!movie) return <LoadingSpinner />;
 
   return (
-    <div className="font-Poppins">
+    <div className={modalClassBlur}>
       <Head>
         <title>The Movie-Dash</title>
         <meta name="description" content="Some cool Movie page" />
@@ -67,6 +74,7 @@ function MovieDetails(): ReactElement {
             </div>
             <div className="mt-2 flex flex-row items-center justify-between gap-4 text-lg">
               <p className="text-sm font-light italic">
+                {/* Cond Render Singular/Plural */}
                 {movie.genres.length > 1
                   ? `Genres: ${movie.genres.join(', ')}`
                   : `Genre: ${movie.genres}`}
@@ -77,6 +85,7 @@ function MovieDetails(): ReactElement {
             </div>
             <p className="mt-8 font-medium">{movie.fullplot}</p>
             <h2 className="mt-4 text-base">
+              {/* Cond Render Singular/Plural */}
               {movie.directors.length > 1
                 ? `Directors: ${movie.directors.join(', ')}`
                 : `Director: ${movie.directors}`}
@@ -100,7 +109,7 @@ function MovieDetails(): ReactElement {
             </div>
           </div>
         </div>
-
+        {/* Modal for Delete Headless Ui */}
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog
             as="div"
