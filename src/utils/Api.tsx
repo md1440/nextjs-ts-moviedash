@@ -58,7 +58,7 @@ export async function fetcher(path: string) {
   return axios({
     method: 'GET',
     url: `${baseUrl}${path}`,
-  }).then((resp) => resp.data);
+  }).then((res) => res.data);
 }
 
 export function useMovieApi<T>(
