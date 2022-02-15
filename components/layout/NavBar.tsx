@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import React, { ReactElement } from 'react';
 import { MdMovieFilter } from 'react-icons/md';
+import MovieSearch from '../MovieSearch';
 
 function NavBar(): ReactElement {
   return (
-    <nav>
-      <ul className="fontmedium flex flex-row items-center justify-start bg-indigo-400 px-3 text-lg uppercase tracking-wide text-white">
+    <nav className="flex flex-row justify-between bg-indigo-400 items-center">
+      <ul className="fontmedium flex flex-row items-center justify-start px-3 text-lg uppercase tracking-wide text-white">
         <MdMovieFilter className="ml-12 mr-4 text-3xl" />
         <Link href="/" passHref>
           <li className="cursor-pointer px-3 py-4">Home</li>
@@ -24,6 +25,9 @@ function NavBar(): ReactElement {
         </Link>
         <li className="cursor-pointer px-3 py-4">Statistics</li>
       </ul>
+      <div className="cursor-pointer px-3  mr-12">
+        <MovieSearch />
+      </div>
     </nav>
   );
 }
