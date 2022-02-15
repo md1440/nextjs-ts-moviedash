@@ -1,13 +1,15 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head';
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useState } from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import { Movie } from '../../src/types/types';
 import { useMovieApi } from '../../src/utils/Api';
 
 function MovieList(): ReactElement {
-  const [movies, setMovies] = useMovieApi<Movie[]>('/');
+  const [pageIndex, setPageIndex] = useState(0);
+  const [movies, mutate] = useMovieApi<Movie[]>(`?page=${pageIndex}`);
+  // const [cnt, setCnt] = useState(1);
 
   if (!movies) return <LoadingSpinner />;
 
@@ -23,6 +25,10 @@ function MovieList(): ReactElement {
           List of all Movies
         </h1>
         <MovieCardList movies={movies} />
+        <div className='mt-12 flex flex-row justify-center gap-4'>
+          <button type="button" className='btn' onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
+          <button type="button" className='btn' onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+        </div>
       </main>
     </div>
   );

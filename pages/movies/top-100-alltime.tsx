@@ -7,7 +7,7 @@ import { Movie } from '../../src/types/types';
 import { useMovieApi } from '../../src/utils/Api';
 
 function Top100Alltime(): ReactElement {
-  const [movies, setMovies] = useMovieApi<Movie[]>('/top-100-alltime');
+  const [movies, mutate] = useMovieApi<Movie[]>('/top-100-alltime');
 
   if (!movies) return <LoadingSpinner />;
 
