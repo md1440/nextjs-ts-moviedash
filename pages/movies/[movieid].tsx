@@ -31,7 +31,7 @@ function MovieDetails(): ReactElement {
     setIsOpen(true);
   }
 
-  const modalClassBlur = isOpen ? `font-poppins blur-xl` : `font-poppins`
+  const modalClassBlur = isOpen ? `font-poppins blur-xl` : `font-poppins`;
 
   // *** Delete funtionality and url change with replace to /movies
   const onDelete = () => {
@@ -43,8 +43,11 @@ function MovieDetails(): ReactElement {
   return (
     <div className={modalClassBlur}>
       <Head>
-        <title>The Movie-Dash</title>
-        <meta name="description" content="Some cool Movie page" />
+        <title>{movie.title} - Details</title>
+        <meta
+          name="description"
+          content={`Detail Information for the movie: ${movie.title}`}
+        />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -83,34 +86,26 @@ function MovieDetails(): ReactElement {
                 Released: {movie.year}
               </p>
             </div>
-            <p className="mt-8 font-medium">{movie.fullplot}</p>
-            <h2 className="mt-4 text-base">
+            <p className="mt-5 font-medium">{movie.fullplot}</p>
+            <h2 className="mt-4 text-base font-light">
               {/* Cond Render Singular/Plural */}
               {movie.directors.length > 1
                 ? `Directors: ${movie.directors.join(', ')}`
                 : `Director: ${movie.directors}`}
             </h2>
-            <h2>{`Cast: ${movie.cast.join(', ')}`}</h2>
-            <div className="flex flex-row justify-center">
-              <button
-                type="button"
-                className="btn mx-auto mt-8 flex"
-                onClick={() => back()}
-              >
+            <h2 className="font-light mt-1">{`Cast: ${movie.cast.join(', ')}`}</h2>
+            <div className="mt-12 flex flex-row items-center justify-center gap-4">
+              <button type="button" className="btn" onClick={() => back()}>
                 Back
               </button>
               <button
                 type="button"
-                className="btn mx-auto mt-8 flex"
+                className="btn"
                 onClick={() => push(`/movies/edit/${movieId}`)}
               >
                 Edit
               </button>
-              <button
-                type="button"
-                className="btn mx-auto mt-8 flex"
-                onClick={openModal}
-              >
+              <button type="button" className="btn" onClick={openModal}>
                 Delete
               </button>
             </div>
