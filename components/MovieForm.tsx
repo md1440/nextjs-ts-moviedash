@@ -98,9 +98,9 @@ function MovieForm(props: Props): ReactElement {
     e.preventDefault();
     movieApi(
       props.isEdit ? 'patch' : 'post',
-      props.isEdit ? `/movies/${props._id}` : '/',
+      props.isEdit ? `/${props._id}` : '/',
       (): void => {
-        router.replace(props.isEdit ? `/movies/${props._id}` : '/movies');
+        router.replace(props.isEdit ? `/movies/${id}` : '/movies');
       },
       formObject(),
     );
@@ -216,7 +216,7 @@ function MovieForm(props: Props): ReactElement {
             Title
           </label>
           <input
-            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
             type="text"
             placeholder="Title"
             required
@@ -247,7 +247,7 @@ function MovieForm(props: Props): ReactElement {
               className="mb-2 flex flex-row items-center"
             >
               <input
-                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
                 placeholder="Director"
                 type="text"
                 required
@@ -284,7 +284,7 @@ function MovieForm(props: Props): ReactElement {
               className="mb-2 flex flex-row items-center"
             >
               <input
-                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
                 placeholder="Genre"
                 type="text"
                 required
@@ -321,7 +321,7 @@ function MovieForm(props: Props): ReactElement {
               className="mb-2 flex flex-row items-center"
             >
               <input
-                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+                className="mr-2 mb-2 flex-auto border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
                 placeholder="Actor"
                 type="text"
                 required
@@ -342,14 +342,14 @@ function MovieForm(props: Props): ReactElement {
           <label className="mb-2 text-base font-medium tracking-wider text-gray-900">
             Plot
           </label>
-          <input
-            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+          <textarea
+            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
             placeholder="Brief Plot Summary"
             required
-            type="text"
+            rows={4}
             minLength={10}
             value={plot}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
               setPlot(e.target.value)
             }
           />
@@ -358,14 +358,14 @@ function MovieForm(props: Props): ReactElement {
           <label className="mb-2 text-base font-medium tracking-wider text-gray-900">
             Fullplot
           </label>
-          <input
-            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+          <textarea
+            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
             placeholder="Full Plot Summary"
             required
-            type="text"
+            rows={8}
             minLength={24}
             value={fullplot}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>): void =>
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>): void =>
               setFullplot(e.target.value)
             }
           />
@@ -375,7 +375,7 @@ function MovieForm(props: Props): ReactElement {
             Poster
           </label>
           <input
-            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
             placeholder="http://"
             required
             type="url"
@@ -385,12 +385,12 @@ function MovieForm(props: Props): ReactElement {
             }
           />
         </div>
-        <div className="flex flex-col">
+        {/* <div className="flex flex-col">
           <label className="mb-2 text-base font-medium tracking-wider text-gray-900">
             Id
           </label>
           <input
-            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+            className="mr-2 mb-2 border border-indigo-600 px-5 py-2.5 text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
             placeholder={
               props.isEdit
                 ? props._id
@@ -400,14 +400,14 @@ function MovieForm(props: Props): ReactElement {
             type="text"
             value={id}
           />
-        </div>
+        </div> */}
         <div className="flex flex-row items-center gap-4">
           <div className="flex flex-col">
             <label className="mb-2 text-base font-medium tracking-wider text-gray-900">
               Release Date
             </label>
             <input
-              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
               type="date"
               required
               value={released}
@@ -421,7 +421,7 @@ function MovieForm(props: Props): ReactElement {
               Production Year
             </label>
             <input
-              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
               placeholder="e.g. 1984"
               type="text"
               required
@@ -437,7 +437,7 @@ function MovieForm(props: Props): ReactElement {
               IMDB Rating
             </label>
             <input
-              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
               placeholder="1-10 -> e.g. 3 or 3.3"
               required
               type="text"
@@ -453,7 +453,7 @@ function MovieForm(props: Props): ReactElement {
               Type
             </label>
             <select
-              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+              className="mr-2 mb-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
               value={type}
               required
               onChange={(e) => setType(e.target.value as Type)}

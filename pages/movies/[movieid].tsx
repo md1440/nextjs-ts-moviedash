@@ -102,6 +102,13 @@ function MovieDetails(): ReactElement {
               <button
                 type="button"
                 className="btn mx-auto mt-8 flex"
+                onClick={() => push(`/movies/edit/${movieId}`)}
+              >
+                Edit
+              </button>
+              <button
+                type="button"
+                className="btn mx-auto mt-8 flex"
                 onClick={openModal}
               >
                 Delete
