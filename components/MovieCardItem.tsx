@@ -12,7 +12,7 @@ function MovieCardItem({ movie }: Props): ReactElement {
   return (
     <Link key={movie._id} href={`/movies/${movie._id}`} passHref>
       <div className="w-60 cursor-pointer rounded-lg bg-indigo-100 shadow-lg">
-        <div className="relative my-2 h-60 rounded-t-lg">
+        <div className="relative my-4 h-60 rounded-t-lg">
           {movie.poster && (
             <Image src={movie.poster} objectFit="contain" layout="fill" />
           )}
