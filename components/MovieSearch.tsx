@@ -42,6 +42,11 @@ function MovieSearch(): ReactElement {
     router.push(`/movies/${movie._id}`);
   };
 
+  const onBlur = ()=> {
+    setSearchResults(null);
+    setSearchTerm('');
+  }
+
   return (
     <div className="relative">
       <div className="">
@@ -53,6 +58,7 @@ function MovieSearch(): ReactElement {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               onSearch(e.target.value)
             }
+            onBlur={onBlur}
             className="w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
           />
           <span className="z-40 ml-[-25px]">
