@@ -1,25 +1,40 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement, useState } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import { IoSearchOutline } from 'react-icons/io5';
 import { MdStars } from 'react-icons/md';
 import { Movie } from '../src/types/types';
 import { movieApi } from '../src/utils/Api';
+import useDebounce from '../src/hooks/useDebounce';
 
 function MovieSearch(): ReactElement {
   const router: NextRouter = useRouter();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Movie[] | null>();
 
+  // *** Search Functionality
+  // 1) onSearch -> setSearchterm 
+  // 2) debouncedSearchTerm -> useDebounce
+  // 3) useEffect -> debounce call api -> setSearchResults || resetSearchResults 
   const onSearch = (searchstr: string): void => {
     setSearchTerm(searchstr);
-    if (searchstr.length > 2) {
-      const searchstrArr = searchstr.split(' ');
-      movieApi('get', `?searchall=${searchstrArr.join('+')}`, setSearchResults);
-    }
-    setSearchResults(null);
   };
+
+  const debouncedSearchTerm: string = useDebounce(searchTerm, 500);
+
+  useEffect((): void => {
+    if (debouncedSearchTerm.length > 2) {
+      const debouncedSearchTermArr: string[] = debouncedSearchTerm.split(' ');
+      movieApi(
+        'get',
+        `?searchall=${debouncedSearchTermArr.join('+')}`,
+        setSearchResults,
+      );
+    } else {
+      setSearchResults(null);
+    }
+  }, [debouncedSearchTerm]);
 
   const onClick = (movie: Movie) => {
     setSearchResults(null);
@@ -91,5 +106,7 @@ function MovieSearch(): ReactElement {
     </div>
   );
 }
+
+
 
 export default MovieSearch;
