@@ -31,20 +31,20 @@ function MovieList(): ReactElement {
   const queryStr = `${defaultQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
 
   // *** Functionality needed for reset - getter and setter
-  const [query, setQuery] = useState(queryStr);
+  const [filterQuery, setFilterQuery] = useState(queryStr);
 
   useEffect(() => {
-    setQuery(queryStr);
+    setFilterQuery(queryStr);
   }, [queryStr]);
 
-  const [movies, mutate] = useMovieApi<Movie[]>(query);
+  const [movies, mutate] = useMovieApi<Movie[]>(filterQuery);
 
   const router: NextRouter = useRouter();
 
   // *** Shallow Routing for updating client url in browser
   useEffect(() => {
-    router.push(`/movies${query}`, undefined, { shallow: true });
-  }, [movies, query]);
+    router.push(`/movies${filterQuery}`, undefined, { shallow: true });
+  }, [movies, filterQuery]);
 
   if (!movies) return <LoadingSpinner />;
 
@@ -71,7 +71,7 @@ function MovieList(): ReactElement {
           setSort={setSort}
           type={type}
           setType={setType}
-          setQuery={setQuery}
+          setFilterQuery={setFilterQuery}
           defaultQuery={defaultQuery}
         />
         <MovieCardList movies={movies} />
