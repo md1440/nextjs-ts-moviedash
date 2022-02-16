@@ -10,9 +10,10 @@ interface Props {
   setYearEq: React.Dispatch<React.SetStateAction<string>>;
   sort: string;
   setSort: React.Dispatch<React.SetStateAction<string>>;
-  setQuery: React.Dispatch<React.SetStateAction<string>>;
+  type: string;
+  setType: React.Dispatch<React.SetStateAction<string>>;
+  setFilterQuery: React.Dispatch<React.SetStateAction<string>>;
   defaultQuery: string;
-  
 }
 
 function MovieQuery({
@@ -24,7 +25,9 @@ function MovieQuery({
   setYearEq,
   sort,
   setSort,
-  setQuery,
+  type,
+  setType,
+  setFilterQuery,
   defaultQuery
 }: Props): ReactElement {
   return (
@@ -54,6 +57,20 @@ function MovieQuery({
           <option value="mystery">Mystery</option>
           <option value="sci-Fi">Sci-Fi</option>
           <option value="war">War</option>
+        </select>
+      </div>
+      <div className="flex flex-col">
+        <label className="mb-[0.5px] text-base font-medium tracking-wider text-indigo-600">
+          Type
+        </label>
+        <select
+          className="mr-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="">All types</option>
+          <option value="movie">Movie</option>
+          <option value="series">Series</option>
         </select>
       </div>
       <div className="flex flex-col">
@@ -200,7 +217,7 @@ function MovieQuery({
         <button
           className="btn mb-0 rounded-lg py-3"
           type="button"
-          onClick={() => setQuery(defaultQuery)}
+          onClick={() => setFilterQuery(defaultQuery)}
         >
           Reset
         </button>

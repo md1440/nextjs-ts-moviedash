@@ -20,16 +20,19 @@ function MovieList(): ReactElement {
   const [genre, setGenre] = useState('');
   const [yearEq, setYearEq] = useState('');
   const [sort, setSort] = useState('');
+  const [type, setType] = useState('');
 
   const limitQuery = `&limit=${limit}`;
   const genreQuery = genre !== '' ? `&genres=${genre}` : '';
   const yearEqQuery = yearEq !== '' ? `&year[eq]=${yearEq}` : '';
   const sortQuery = sort !== '' ? `&sort=${sort}` : '';
-  const queryStr = `${defaultQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}`;
+  const typeQuery = type !== '' ? `&type=${type}` : '';
 
+  const queryStr = `${defaultQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
+
+  // *** Functionality needed for reset - getter and setter
   const [query, setQuery] = useState(queryStr);
 
-  // *** Functionality needed for reset
   useEffect(() => {
     setQuery(queryStr);
   }, [queryStr]);
@@ -66,6 +69,8 @@ function MovieList(): ReactElement {
           setYearEq={setYearEq}
           sort={sort}
           setSort={setSort}
+          type={type}
+          setType={setType}
           setQuery={setQuery}
           defaultQuery={defaultQuery}
         />
