@@ -6,13 +6,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { Fragment, ReactElement, useState } from 'react';
 import { MdStars } from 'react-icons/md';
+
 import LoadingSpinner from '../../components/LoadingSpinner';
 import DeleteModal from '../../components/modals/DeleteModal';
+import useLocalStorage from '../../src/hooks/useLocalStorage';
 import { Movie } from '../../src/types/types';
 import { movieApi, useMovieApi } from '../../src/utils/Api';
+import { useWatchlistStoreContext } from '../../src/utils/WatchlistStore';
 
 function MovieDetails(): ReactElement {
   const { back, asPath, push, replace } = useRouter();
+  const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
+  const { store, dispatch } = useWatchlistStoreContext();
 
   // *** Extracting _id from asPath/Router
   const movieId = asPath.slice(7);
@@ -21,6 +26,14 @@ function MovieDetails(): ReactElement {
   const [movie] = useMovieApi<Movie>(`${movieId}`);
   // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
+
+  if (!movie) return <LoadingSpinner />;
+
+  const onAddToWatchList = () => {
+    dispatch({ type: 'AddToWatchList', movie });
+    const watchlistPrep: Movie[] = [...store.watchlist, movie];
+    setWatchlist(watchlistPrep);
+  };
 
   // *** Modal functionality + blur functionality when Modal isOpen
   function closeModal(): void {
@@ -37,8 +50,6 @@ function MovieDetails(): ReactElement {
   const onDelete = () => {
     movieApi('delete', `/${movieId}`, () => replace('/movies'));
   };
-
-  if (!movie) return <LoadingSpinner />;
 
   return (
     <div className={modalClassBlur}>
@@ -93,10 +104,15 @@ function MovieDetails(): ReactElement {
                 ? `Directors: ${movie.directors.join(', ')}`
                 : `Director: ${movie.directors}`}
             </h2>
-            <h2 className="font-light mt-1">{`Cast: ${movie.cast.join(', ')}`}</h2>
+            <h2 className="mt-1 font-light">{`Cast: ${movie.cast.join(
+              ', ',
+            )}`}</h2>
             <div className="mt-12 flex flex-row items-center justify-center gap-4">
               <button type="button" className="btn" onClick={() => back()}>
                 Back
+              </button>
+              <button type="button" className="btn" onClick={onAddToWatchList}>
+                Add to Watchlist
               </button>
               <button
                 type="button"

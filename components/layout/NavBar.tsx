@@ -23,6 +23,9 @@ function NavBar(): ReactElement {
         <Link href="/movies/random" passHref>
           <li className="cursor-pointer px-3 py-4">Random</li>
         </Link>
+        <Link href="/movies/watchlist" passHref>
+          <li className="cursor-pointer px-3 py-4">Watchlist</li>
+        </Link>
         <li className="cursor-pointer px-3 py-4">Statistics</li>
       </ul>
       <div className="cursor-pointer px-3 py-2 mr-12">
