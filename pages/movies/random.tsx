@@ -22,7 +22,7 @@ function RandomMovie(): ReactElement {
         <meta name="description" content="Top 100 rated Movies of Alltime" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
+      <h1 className="mt-12 mb-14 text-center text-5xl font-black tracking-wider text-indigo-500">
         Random Movies
       </h1>
       <MovieCardList movies={movies} />

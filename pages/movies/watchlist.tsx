@@ -48,8 +48,8 @@ function Watchlist(): ReactElement {
         <meta name="description" content="Your Watchlist" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container mx-auto mt-14">
-        <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
+      <main className="container mx-auto">
+        <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500 mb-14">
           Your Watchlist
         </h1>
         <div className="container mx-auto mt-14 flex flex-row flex-wrap justify-around gap-x-8 gap-y-10">
