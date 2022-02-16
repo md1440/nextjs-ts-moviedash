@@ -8,7 +8,7 @@ interface Props {
 
 function MovieCardList({ movies }: Props): ReactElement {
   return (
-    <main className="container mx-auto mt-14">
+    <main className="container mx-auto">
       <div className="flex flex-row flex-wrap justify-around gap-x-8 gap-y-10">
         {movies.map(
           (movie: Movie): ReactElement => (
