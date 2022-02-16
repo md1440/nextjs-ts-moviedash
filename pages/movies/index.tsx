@@ -7,7 +7,7 @@ import { Movie } from '../../src/types/types';
 import { useMovieApi } from '../../src/utils/Api';
 
 function MovieList(): ReactElement {
-  const [pageIndex, setPageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(1);
   const [movies, mutate] = useMovieApi<Movie[]>(`?page=${pageIndex}`);
   // const [cnt, setCnt] = useState(1);
 
@@ -25,9 +25,54 @@ function MovieList(): ReactElement {
           List of all Movies
         </h1>
         <MovieCardList movies={movies} />
-        <div className='mt-12 flex flex-row justify-center gap-4'>
-          <button type="button" className='btn' onClick={() => setPageIndex(pageIndex - 1)}>Previous</button>
-          <button type="button" className='btn' onClick={() => setPageIndex(pageIndex + 1)}>Next</button>
+
+        <div className="flex justify-center mt-16 mb-12 items-center">
+          <nav aria-label="Page navigation example">
+            <ul className="list-style-none flex items-center gap-2">
+              <li className="page-item">
+                <a
+                  className="page-link relative btn mr-0"
+                  href="#"
+                  onClick={() => pageIndex > 0 ? setPageIndex(pageIndex - 1) : setPageIndex(0)}
+                >
+                  Prev
+                </a>
+              </li>
+              <li className="page-item">
+                <a
+                  className="page-link relative block rounded-full border-0 bg-transparent py-1.5 px-3 text-gray-800 outline-none transition-all duration-300 hover:bg-gray-200 hover:text-gray-800 focus:shadow-none"
+                  href="#"
+                >
+                  {pageIndex > 1 ? pageIndex - 1 : ''}
+                </a>
+              </li>
+              <li className="page-item active">
+                <a
+                  className="page-link relative block rounded-full border-0 bg-indigo-600 py-1.5 px-3 text-white shadow-md outline-none transition-all duration-300 hover:bg-indigo-600 hover:text-white focus:shadow-md"
+                  href="#"
+                >
+                  {pageIndex} <span className="visually-hidden">(current)</span>
+                </a>
+              </li>
+              <li className="page-item">
+                <a
+                  className="page-link relative block rounded-full border-0 bg-transparent py-1.5 px-3 text-gray-800 outline-none transition-all duration-300 hover:bg-gray-200 hover:text-gray-800 focus:shadow-none"
+                  href="#"
+                >
+                  {pageIndex + 1}
+                </a>
+              </li>
+              <li className="page-item">
+                <a
+                  className="page-link relative btn mr-0"
+                  href="#"
+                  onClick={() => setPageIndex(pageIndex + 1)}
+                >
+                  Next
+                </a>
+              </li>
+            </ul>
+          </nav>
         </div>
       </main>
     </div>
