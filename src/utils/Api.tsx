@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable no-param-reassign */
 /* eslint-disable no-self-assign */
 import axios, { AxiosResponse, Method } from 'axios';
@@ -63,9 +64,18 @@ export async function fetcher(path: string) {
 
 export function useMovieApi<T>(
   path: string,
-  swr = {},
+  swrConf = {},
 ): [T | undefined, KeyedMutator<T>] {
-  const { data, mutate } = useSWR(path, fetcher, swr);
+  const { data, mutate } = useSWR(path, fetcher, swrConf);
   useDebugValue(data);
   return [data, mutate];
 }
+
+// export function useMovieApiInfinite<T>(
+//   getKey: () => {},
+//   swrConf = {},
+// ): [T | undefined, number, () => {}] {
+//   const { data, size, setSize } = useSWRInfinite(getKey, fetcher, swrConf);
+//   useDebugValue(data);
+//   return [data, size, setSize];
+// }
