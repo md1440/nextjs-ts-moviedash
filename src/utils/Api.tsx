@@ -25,6 +25,12 @@ axios.interceptors.response.use(
           if (!movie.poster) {
             movie.poster = '/images/2084555.jpg';
           }
+          if (!movie.imdb.rating) {
+            movie.imdb.rating = 5.0;
+          }
+          if (!movie.year) {
+            movie.year = 2000;
+          }
           return movie;
         });
         return res;

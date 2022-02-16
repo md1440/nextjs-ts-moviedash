@@ -1,10 +1,10 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
-import { Movie } from '../../../src/types/types';
-import { useMovieApi } from '../../../src/utils/Api';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import MovieForm from '../../../components/MovieForm';
+import { Movie } from '../../../src/types/types';
+import { useMovieApi } from '../../../src/utils/Api';
 
 function MovieEdit(): ReactElement {
   const { back, asPath, push, replace } = useRouter();
@@ -56,16 +56,16 @@ function MovieEdit(): ReactElement {
           released={movie.released.slice(0, 10)}
           directors={movie.directors}
           writers={movie.writers || ['']}
-          year={movie.year.toString()}
+          year={(movie.year && movie.year.toString()) || ''}
           countries={movie.countries}
           type={movie.type}
           tomatoes={{
             ...movie.tomatoes,
             viewer: {
               ...movie.tomatoes?.viewer,
-              rating: String(movie.tomatoes?.viewer.rating || '') ,
-              numReviews: String(movie.tomatoes?.viewer.numReviews || '') ,
-              meter: String(movie.tomatoes?.viewer.meter || '') ,
+              rating: String(movie.tomatoes?.viewer.rating || ''),
+              numReviews: String(movie.tomatoes?.viewer.numReviews || ''),
+              meter: String(movie.tomatoes?.viewer.meter || ''),
             } || { rating: '', numReviews: '', meter: '' },
             critic: {
               ...movie.tomatoes?.critic,
