@@ -19,10 +19,7 @@ interface Props {
 }
 
 function MovieList({ query }: Props): ReactElement {
-  const router: NextRouter = useRouter();
-
   // *** Building the Query
-
   const [pageQuery, pageIndex, setPageIndex] = useQuery(
     query.page || '1',
     `?page=`,
@@ -54,6 +51,7 @@ function MovieList({ query }: Props): ReactElement {
   const [movies, mutate] = useMovieApi<Movie[]>(queryStr);
 
   // *** Shallow Routing for updating client url in browser
+  const router: NextRouter = useRouter();
   useEffect(() => {
     router.push(`${queryStr}`, undefined, { shallow: true });
   }, [queryStr]);
