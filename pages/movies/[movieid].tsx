@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 /* eslint-disable react/jsx-no-bind */
 /* eslint-disable react/jsx-one-expression-per-line */
 import { Dialog, Transition } from '@headlessui/react';
@@ -6,7 +7,6 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import React, { Fragment, ReactElement, useState } from 'react';
 import { MdStars } from 'react-icons/md';
-
 import LoadingSpinner from '../../components/LoadingSpinner';
 import DeleteModal from '../../components/modals/DeleteModal';
 import useLocalStorage from '../../src/hooks/useLocalStorage';
@@ -14,21 +14,23 @@ import { Movie } from '../../src/types/types';
 import { movieApi, useMovieApi } from '../../src/utils/Api';
 import { useWatchlistStoreContext } from '../../src/utils/WatchlistStore';
 
-function MovieDetails(): ReactElement {
-  const { back, asPath, push, replace } = useRouter();
+interface Props {
+  movieId: string;
+}
+
+function MovieDetails({ movieId }: Props): ReactElement {
+  const { back, push, replace } = useRouter();
   const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
   const { store, dispatch } = useWatchlistStoreContext();
 
-  // *** Extracting _id from asPath/Router
-  const movieId = asPath.slice(7);
-
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`${movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${movieId}`);
   // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
 
   if (!movie) return <LoadingSpinner />;
 
+  // *** Add to Watchlist
   const onAddToWatchList = () => {
     dispatch({ type: 'AddToWatchList', movie });
     const watchlistPrep: Movie[] = [...store.watchlist, movie];
@@ -44,6 +46,7 @@ function MovieDetails(): ReactElement {
     setIsOpen(true);
   }
 
+  // *** Background Blur conditional class while DeleteModal open
   const modalClassBlur = isOpen ? `font-poppins blur-xl` : `font-poppins`;
 
   // *** Delete funtionality and url change with replace to /movies
@@ -147,3 +150,8 @@ function MovieDetails(): ReactElement {
 }
 
 export default MovieDetails;
+
+MovieDetails.getInitialProps = ({ query }: {query: {movieId: string}}) => {
+  const { movieId } = query;
+  return { movieId };
+};
