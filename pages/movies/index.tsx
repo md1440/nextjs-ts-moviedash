@@ -47,8 +47,10 @@ function MovieList({ query }: Props): ReactElement {
 
   const [sortQuery, sort, setSort] = useQuery(query.sort || '', `&sort=`);
 
+  // *** Building the querystr
   const queryStr = `${pageQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
 
+  // *** Fetching the Data
   const [movies, mutate] = useMovieApi<Movie[]>(queryStr);
 
   // *** Shallow Routing for updating client url in browser
@@ -56,6 +58,7 @@ function MovieList({ query }: Props): ReactElement {
     router.push(`${queryStr}`, undefined, { shallow: true });
   }, [queryStr]);
 
+  // *** onReset clickhandler -> reset form to default
   const onReset = (): void => {
     setPageIndex('1');
     setLimit('100');
