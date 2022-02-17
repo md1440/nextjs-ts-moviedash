@@ -117,7 +117,7 @@ function MovieDetails(): ReactElement {
               <button
                 type="button"
                 className="btn"
-                onClick={() => push(`/movies/edit/${movieId}`)}
+                onClick={() => push(`/movies/edit${movieId}`)}
               >
                 Edit
               </button>
