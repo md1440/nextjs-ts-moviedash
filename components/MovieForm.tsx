@@ -1,11 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable react/jsx-one-expression-per-line */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/destructuring-assignment */
 import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement, useEffect, useRef, useState } from 'react';
+import React, { ReactElement, useRef, useState } from 'react';
 import { usePrevious } from 'react-use';
+import useInputFocus from '../src/hooks/useInputFocus';
 import { movieApi } from '../src/utils/Api';
 
 type Type = 'movie' | 'series';
@@ -106,107 +108,51 @@ function MovieForm(props: Props): ReactElement {
     );
   };
 
-  // *** Director Handlers
-  const onChangeDirector = (index: number, newValue: string): void => {
-    setDirectors((currentDirectors: string[]): string[] => {
-      const directorsCopy: string[] = [...currentDirectors];
-      directorsCopy[index] = newValue;
-      return directorsCopy;
+  // *** Generc onChange, onAdd, onRemove Handlers for directors, genres, cast
+
+  const onChangeHandler = (
+    index: number,
+    newValue: string,
+    setState: (value: React.SetStateAction<string[]>) => void,
+  ): void => {
+    setState((currentState: string[]): string[] => {
+      const currentStateCopy: string[] = [...currentState];
+      currentStateCopy[index] = newValue;
+      return currentStateCopy;
     });
   };
 
-  const onAddDirector: () => void = (): void => {
-    setDirectors((currentDirectors: string[]): string[] => [
-      ...currentDirectors,
-      '',
-    ]);
+  const onAddHandler = (
+    setState: (value: React.SetStateAction<string[]>) => void,
+  ): void => {
+    setState((currentState: string[]): string[] => [...currentState, '']);
   };
 
-  const onRemoveDirector = (index: number): void => {
-    if (directors.length > 1) {
-      setDirectors((currentDirectors) =>
-        currentDirectors.filter((_director, i: number) => i !== index),
+  const onRemoveHandler = (
+    index: number,
+    state: string[],
+    setState: (value: React.SetStateAction<string[]>) => void,
+  ): void => {
+    if (state.length > 1) {
+      setState((currentState) =>
+        currentState.filter((_state, i: number) => i !== index),
       );
     }
   };
 
   // *** Focus for Director New Input Field
   const prevDirectors = usePrevious(directors);
-  const directorsContainer = useRef<any>(null);
+  const directorsContainer = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (prevDirectors && prevDirectors.length < directors.length) {
-      (directorsContainer.current as HTMLElement) &&
-        (directorsContainer.current.firstChild as HTMLElement) &&
-        (directorsContainer.current.firstChild as HTMLElement).focus();
-    }
-  }, [directors, prevDirectors]);
-
-  // *** Genre Handlers
-  const onChangeGenre = (index: number, newValue: string): void => {
-    setGenres((currentGenres: string[]): string[] => {
-      const genresCopy: string[] = [...currentGenres];
-      genresCopy[index] = newValue;
-      return genresCopy;
-    });
-  };
-
-  const onAddGenre: () => void = (): void => {
-    setGenres((currentGenres: string[]): string[] => [...currentGenres, '']);
-  };
-
-  const onRemoveGenre = (index: number): void => {
-    if (genres.length > 1) {
-      setGenres((currentGenres) =>
-        currentGenres.filter((_director, i: number) => i !== index),
-      );
-    }
-  };
-
-  // *** Focus for Genre New Input Field
   const prevGenres = usePrevious(genres);
-  const genresContainer = useRef<any>(null);
+  const genresContainer = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (prevGenres && prevGenres.length < genres.length) {
-      (genresContainer.current as HTMLElement) &&
-        (genresContainer.current.firstChild as HTMLElement) &&
-        (genresContainer.current.firstChild as HTMLElement).focus();
-    }
-  }, [genres, prevGenres]);
-
-  // *** Cast Handlers
-  const onChangeCast = (index: number, newValue: string): void => {
-    setCast((currentCast: string[]): string[] => {
-      const castCopy: string[] = [...currentCast];
-      castCopy[index] = newValue;
-      return castCopy;
-    });
-  };
-
-  const onAddCast: () => void = (): void => {
-    setCast((currentCast: string[]): string[] => [...currentCast, '']);
-  };
-
-  const onRemoveCast = (index: number): void => {
-    if (cast.length > 1) {
-      setCast((currentCast) =>
-        currentCast.filter((_actor, i: number) => i !== index),
-      );
-    }
-  };
-
-  // *** Focus for Genre New Input Field
   const prevCast = usePrevious(cast);
-  const castContainer = useRef<any>(null);
+  const castContainer = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (prevCast && prevCast.length < cast.length) {
-      (castContainer.current as HTMLElement) &&
-        (castContainer.current.firstChild as HTMLElement) &&
-        (castContainer.current.firstChild as HTMLElement).focus();
-    }
-  }, [cast, prevCast]);
+  useInputFocus(prevDirectors, directors, directorsContainer);
+  useInputFocus(prevGenres, genres, genresContainer);
+  useInputFocus(prevCast, cast, castContainer);
 
   return (
     <div className="container mx-auto mt-14 font-Poppins">
@@ -235,7 +181,7 @@ function MovieForm(props: Props): ReactElement {
             <button
               className="btn-small-form"
               type="button"
-              onClick={onAddDirector}
+              onClick={() => onAddHandler(setDirectors)}
             >
               +
             </button>
@@ -252,12 +198,14 @@ function MovieForm(props: Props): ReactElement {
                 type="text"
                 required
                 value={director}
-                onChange={(e) => onChangeDirector(index, e.target.value)}
+                onChange={(e) =>
+                  onChangeHandler(index, e.target.value, setDirectors)
+                }
               />
               <button
                 className="btn-small-form"
                 type="button"
-                onClick={() => onRemoveDirector(index)}
+                onClick={() => onRemoveHandler(index, directors, setDirectors)}
               >
                 -
               </button>
@@ -272,7 +220,7 @@ function MovieForm(props: Props): ReactElement {
             <button
               className="btn-small-form"
               type="button"
-              onClick={onAddGenre}
+              onClick={() => onAddHandler(setGenres)}
             >
               +
             </button>
@@ -289,12 +237,14 @@ function MovieForm(props: Props): ReactElement {
                 type="text"
                 required
                 value={genre}
-                onChange={(e) => onChangeGenre(index, e.target.value)}
+                onChange={(e) =>
+                  onChangeHandler(index, e.target.value, setGenres)
+                }
               />
               <button
                 className="btn-small-form"
                 type="button"
-                onClick={() => onRemoveGenre(index)}
+                onClick={() => onRemoveHandler(index, genres, setGenres)}
               >
                 -
               </button>
@@ -309,7 +259,7 @@ function MovieForm(props: Props): ReactElement {
             <button
               className="btn-small-form"
               type="button"
-              onClick={onAddCast}
+              onClick={() => onAddHandler(setCast)}
             >
               +
             </button>
@@ -326,12 +276,14 @@ function MovieForm(props: Props): ReactElement {
                 type="text"
                 required
                 value={actor}
-                onChange={(e) => onChangeCast(index, e.target.value)}
+                onChange={(e) =>
+                  onChangeHandler(index, e.target.value, setCast)
+                }
               />
               <button
                 className="btn-small-form"
                 type="button"
-                onClick={() => onRemoveCast(index)}
+                onClick={() => onRemoveHandler(index, cast, setCast)}
               >
                 -
               </button>
