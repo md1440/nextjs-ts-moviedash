@@ -1,50 +1,69 @@
+/* eslint-disable arrow-body-style */
+/* eslint-disable prefer-destructuring */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement, useEffect, useState } from 'react';
+import React, { ReactElement, useEffect } from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import MovieQuery from '../../components/MovieQuery';
 import Pagination from '../../components/Pagination';
+import useQuery from '../../src/hooks/useQuery';
 import { Movie } from '../../src/types/types';
 import { useMovieApi } from '../../src/utils/Api';
 
-function MovieList(): ReactElement {
-  const [pageIndex, setPageIndex] = useState(1);
-  const defaultQuery = `?page=${pageIndex}`;
+interface Props {
+  query: any;
+}
+
+function MovieList({ query }: Props): ReactElement {
+  const router: NextRouter = useRouter();
 
   // *** Building the Query
-  const [limit, setLimit] = useState('100');
-  const [genre, setGenre] = useState('');
-  const [yearEq, setYearEq] = useState('');
-  const [sort, setSort] = useState('');
-  const [type, setType] = useState('');
 
-  const limitQuery = `&limit=${limit}`;
-  const genreQuery = genre !== '' ? `&genres=${genre}` : '';
-  const yearEqQuery = yearEq !== '' ? `&year[eq]=${yearEq}` : '';
-  const sortQuery = sort !== '' ? `&sort=${sort}` : '';
-  const typeQuery = type !== '' ? `&type=${type}` : '';
+  const [pageQuery, pageIndex, setPageIndex] = useQuery(
+    query.page || '1',
+    `?page=`,
+  );
 
-  const queryStr = `${defaultQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
+  const [limitQuery, limit, setLimit] = useQuery(
+    query.limit || '100',
+    `&limit=`,
+  );
 
-  // *** Functionality needed for reset - getter and setter
-  const [filterQuery, setFilterQuery] = useState(queryStr);
+  const [genreQuery, genre, setGenre] = useQuery(
+    query.genres || '',
+    `&genres=`,
+  );
 
-  useEffect(() => {
-    setFilterQuery(queryStr);
-  }, [queryStr]);
+  const [yearEqQuery, yearEq, setYearEq] = useQuery(
+    query['year[eq]'] || '',
+    `&year[eq]=`,
+  );
 
-  const [movies, mutate] = useMovieApi<Movie[]>(filterQuery);
+  const [typeQuery, type, setType] = useQuery(query.type || '', `&type=`);
 
-  const router: NextRouter = useRouter();
+  const [sortQuery, sort, setSort] = useQuery(query.sort || '', `&sort=`);
+
+  const queryStr = `${pageQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
+
+  const [movies, mutate] = useMovieApi<Movie[]>(queryStr);
 
   // *** Shallow Routing for updating client url in browser
   useEffect(() => {
-    router.push(`/movies${filterQuery}`, undefined, { shallow: true });
-  }, [movies, filterQuery]);
+    router.push(`${queryStr}`, undefined, { shallow: true });
+  }, [queryStr]);
+
+  const onReset = (): void => {
+    setPageIndex('1');
+    setLimit('100');
+    setGenre('');
+    setYearEq('');
+    setSort('');
+    setType('');
+  };
 
   if (!movies) return <LoadingSpinner />;
 
@@ -71,8 +90,7 @@ function MovieList(): ReactElement {
           setSort={setSort}
           type={type}
           setType={setType}
-          setFilterQuery={setFilterQuery}
-          defaultQuery={defaultQuery}
+          onReset={onReset}
         />
         <MovieCardList movies={movies} />
         <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
@@ -82,3 +100,7 @@ function MovieList(): ReactElement {
 }
 
 export default MovieList;
+
+MovieList.getInitialProps = ({ query }: any) => {
+  return { query };
+};

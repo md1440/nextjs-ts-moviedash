@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { ReactElement } from 'react';
 
@@ -12,8 +13,7 @@ interface Props {
   setSort: React.Dispatch<React.SetStateAction<string>>;
   type: string;
   setType: React.Dispatch<React.SetStateAction<string>>;
-  setFilterQuery: React.Dispatch<React.SetStateAction<string>>;
-  defaultQuery: string;
+  onReset: () => void;
 }
 
 function MovieQuery({
@@ -27,8 +27,7 @@ function MovieQuery({
   setSort,
   type,
   setType,
-  setFilterQuery,
-  defaultQuery
+  onReset,
 }: Props): ReactElement {
   return (
     <div className="mt-16 mb-10 flex flex-row items-end justify-end gap-4">
@@ -217,7 +216,7 @@ function MovieQuery({
         <button
           className="btn mb-0 rounded-lg py-3"
           type="button"
-          onClick={() => setFilterQuery(defaultQuery)}
+          onClick={onReset}
         >
           Reset
         </button>
