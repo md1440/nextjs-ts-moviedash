@@ -15,16 +15,16 @@ import { movieApi, useMovieApi } from '../../src/utils/Api';
 import { useWatchlistStoreContext } from '../../src/utils/WatchlistStore';
 
 interface Props {
-  movieId: string;
+  query: any;
 }
 
-function MovieDetails({ movieId }: Props): ReactElement {
+function MovieDetails({ query }: Props): ReactElement {
   const { back, push, replace } = useRouter();
   const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
   const { store, dispatch } = useWatchlistStoreContext();
 
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`/${movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
   // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +51,7 @@ function MovieDetails({ movieId }: Props): ReactElement {
 
   // *** Delete funtionality and url change with replace to /movies
   const onDelete = () => {
-    movieApi('delete', `/${movieId}`, () => replace('/movies'));
+    movieApi('delete', `/${query.movieId}`, () => replace('/movies'));
   };
 
   return (
@@ -120,7 +120,7 @@ function MovieDetails({ movieId }: Props): ReactElement {
               <button
                 type="button"
                 className="btn"
-                onClick={() => push(`/movies/edit/${movieId}`)}
+                onClick={() => push(`/movies/edit/${query.movieId}`)}
               >
                 Edit
               </button>
@@ -151,7 +151,6 @@ function MovieDetails({ movieId }: Props): ReactElement {
 
 export default MovieDetails;
 
-MovieDetails.getInitialProps = ({ query }: {query: {movieId: string}}) => {
-  const { movieId } = query;
-  return { movieId };
+MovieDetails.getInitialProps = ({ query }: any) => {
+  return { query };
 };
