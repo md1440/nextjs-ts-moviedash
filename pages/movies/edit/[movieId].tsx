@@ -1,3 +1,4 @@
+/* eslint-disable arrow-body-style */
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { ReactElement } from 'react';
@@ -6,14 +7,16 @@ import MovieForm from '../../../components/MovieForm';
 import { Movie } from '../../../src/types/types';
 import { useMovieApi } from '../../../src/utils/Api';
 
-function MovieEdit(): ReactElement {
-  const { back, asPath, push, replace } = useRouter();
+interface Props {
+  query: any;
+}
 
-  // *** Extracting _id from asPath/Router
-  const movieId = asPath.slice(12);
+function MovieEdit({query}: Props): ReactElement {
+  const { back, asPath, push, replace } = useRouter();
+  console.log(query)
 
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`${movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
 
   if (!movie) {
     return <LoadingSpinner />;
@@ -91,3 +94,7 @@ function MovieEdit(): ReactElement {
 }
 
 export default MovieEdit;
+
+MovieEdit.getInitialProps = ({ query }: any) => {
+  return { query };
+};

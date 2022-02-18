@@ -19,7 +19,6 @@ interface Props {
 }
 
 function MovieDetails({ movieId }: Props): ReactElement {
-  console.log(movieId)
   const { back, push, replace } = useRouter();
   const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
   const { store, dispatch } = useWatchlistStoreContext();
@@ -121,7 +120,7 @@ function MovieDetails({ movieId }: Props): ReactElement {
               <button
                 type="button"
                 className="btn"
-                onClick={() => push(`/movies/edit${movieId}`)}
+                onClick={() => push(`/movies/edit/${movieId}`)}
               >
                 Edit
               </button>
