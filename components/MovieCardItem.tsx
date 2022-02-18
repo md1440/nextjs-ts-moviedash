@@ -15,7 +15,7 @@ interface Props {
 function MovieCardItem({ movie, children }: Props): ReactElement {
   return (
     <Link key={movie._id} href={`/movies/${movie._id}`} passHref>
-      <div className="w-60 cursor-pointer rounded-lg bg-indigo-100 shadow-lg relative">
+      <div className="relative w-60 cursor-pointer rounded-lg bg-indigo-100 shadow-lg">
         <div className="relative my-4 h-60 rounded-t-lg">
           {movie.poster && (
             <Image src={movie.poster} objectFit="contain" layout="fill" />
@@ -36,7 +36,7 @@ function MovieCardItem({ movie, children }: Props): ReactElement {
             {movie.genres.slice(0, 2).join(', ')}
           </p>
         </div>
-      <div>{children}</div>
+        <div>{children}</div>
       </div>
     </Link>
   );
