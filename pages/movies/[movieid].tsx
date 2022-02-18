@@ -52,7 +52,7 @@ function MovieDetails({ query }: Props): ReactElement {
 
   // *** Delete funtionality and url change with replace to /movies
   const onDelete = () => {
-    movieApi('delete', `/${query.movieId}`, () => replace('/movies'));
+    movieApi('delete', `/${query.movieid}`, () => replace('/movies'));
   };
 
   return (
@@ -121,7 +121,7 @@ function MovieDetails({ query }: Props): ReactElement {
               <button
                 type="button"
                 className="btn"
-                onClick={() => push(`/movies/edit/${query.movieId}`)}
+                onClick={() => push(`/movies/edit/${query.movieid}`)}
               >
                 Edit
               </button>
