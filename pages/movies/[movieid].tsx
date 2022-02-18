@@ -19,6 +19,7 @@ interface Props {
 }
 
 function MovieDetails({ movieId }: Props): ReactElement {
+  console.log(movieId)
   const { back, push, replace } = useRouter();
   const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
   const { store, dispatch } = useWatchlistStoreContext();
