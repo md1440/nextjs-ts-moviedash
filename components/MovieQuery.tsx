@@ -39,8 +39,8 @@ function MovieQuery({
   setSearchResults,
   onReset,
 }: Props): ReactElement {
-  // const [searchTerm, setSearchTerm] = useState(searchResults);
 
+  // *** search functionality
   const onSearch = (searchstr: string): void => {
     setSearchTerm(searchstr);
   };

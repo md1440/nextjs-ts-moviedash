@@ -10,6 +10,8 @@ interface Props {
   children?: ReactElement;
 }
 
+// children comes in from watchlist.tsx -> renders a delete from watchlist component
+
 function MovieCardItem({ movie, children }: Props): ReactElement {
   return (
     <Link key={movie._id} href={`/movies/${movie._id}`} passHref>

@@ -6,7 +6,6 @@
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
 import React, { ReactElement, useEffect, useState } from 'react';
-import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import MovieQuery from '../../components/MovieQuery';
 import Pagination from '../../components/Pagination';
@@ -71,11 +70,9 @@ function MovieList({ query }: Props): ReactElement {
     setYearEq('');
     setSort('');
     setType('');
-    setSearchTerm('')
+    setSearchTerm('');
     setSearchResults('');
   };
-
-  if (!movies) return <LoadingSpinner />;
 
   return (
     <div className="font-Poppins">
@@ -106,8 +103,12 @@ function MovieList({ query }: Props): ReactElement {
           setSearchResults={setSearchResults}
           onReset={onReset}
         />
-        <MovieCardList movies={movies} />
-        <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
+        {movies && (
+          <>
+            <MovieCardList movies={movies} />
+            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
+          </>
+        )}
       </main>
     </div>
   );
