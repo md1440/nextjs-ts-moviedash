@@ -1,6 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
+import useDebounce from '../src/hooks/useDebounce';
 
 interface Props {
   genre: string;
@@ -13,6 +15,10 @@ interface Props {
   setSort: React.Dispatch<React.SetStateAction<string>>;
   type: string;
   setType: React.Dispatch<React.SetStateAction<string>>;
+  searchTerm: string;
+  setSearchTerm: React.Dispatch<React.SetStateAction<string>>;
+  searchResults: string;
+  setSearchResults: React.Dispatch<React.SetStateAction<string>>;
   onReset: () => void;
 }
 
@@ -27,10 +33,46 @@ function MovieQuery({
   setSort,
   type,
   setType,
+  searchTerm,
+  setSearchTerm,
+  searchResults,
+  setSearchResults,
   onReset,
 }: Props): ReactElement {
+  // const [searchTerm, setSearchTerm] = useState(searchResults);
+
+  const onSearch = (searchstr: string): void => {
+    setSearchTerm(searchstr);
+  };
+
+  const debouncedSearchTerm: string = useDebounce(searchTerm, 700);
+
+  useEffect((): void => {
+    if (debouncedSearchTerm.length > 2) {
+      const debouncedSearchTermArr: string[] = debouncedSearchTerm.split(' ');
+      setSearchResults(debouncedSearchTermArr.join('+'));
+    } else {
+      setSearchResults('');
+    }
+  }, [debouncedSearchTerm]);
+
   return (
     <div className="mt-16 mb-10 flex flex-row items-end justify-end gap-4">
+      <div className="relative flex flex-col">
+        <label className="mb-[0.5px] text-base font-medium tracking-wider text-indigo-600">
+          Search
+        </label>
+        <input
+          value={searchTerm}
+          type="text"
+          placeholder="Search"
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            onSearch(e.target.value)
+          }
+          // onBlur={onBlur}
+          className="mr-2 w-max border border-indigo-600 px-5 py-2.5 text-left text-base font-medium tracking-wide text-indigo-700 invalid:border-rose-400 hover:bg-indigo-100 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none valid:focus:ring-2 valid:focus:ring-indigo-300"
+        />
+      </div>
       <div className="flex flex-col">
         <label className="mb-[0.5px] text-base font-medium tracking-wider text-indigo-600">
           Genre

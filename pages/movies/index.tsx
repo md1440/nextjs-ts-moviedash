@@ -5,7 +5,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Head from 'next/head';
 import { NextRouter, useRouter } from 'next/router';
-import React, { ReactElement, useEffect } from 'react';
+import React, { ReactElement, useEffect, useState } from 'react';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import MovieCardList from '../../components/MovieCardList';
 import MovieQuery from '../../components/MovieQuery';
@@ -44,8 +44,15 @@ function MovieList({ query }: Props): ReactElement {
 
   const [sortQuery, sort, setSort] = useQuery(query.sort || '', `&sort=`);
 
+  const [searchQuery, searchResults, setSearchResults] = useQuery(
+    query.searchall || '',
+    `&searchall=`,
+  );
+
+  const [searchTerm, setSearchTerm] = useState(searchResults);
+
   // *** Building the querystr
-  const queryStr = `${pageQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}`;
+  const queryStr = `${pageQuery}${limitQuery}${yearEqQuery}${genreQuery}${sortQuery}${typeQuery}${searchQuery}`;
 
   // *** Fetching the Data
   const [movies, mutate] = useMovieApi<Movie[]>(queryStr);
@@ -64,6 +71,8 @@ function MovieList({ query }: Props): ReactElement {
     setYearEq('');
     setSort('');
     setType('');
+    setSearchTerm('')
+    setSearchResults('');
   };
 
   if (!movies) return <LoadingSpinner />;
@@ -91,6 +100,10 @@ function MovieList({ query }: Props): ReactElement {
           setSort={setSort}
           type={type}
           setType={setType}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
           onReset={onReset}
         />
         <MovieCardList movies={movies} />
