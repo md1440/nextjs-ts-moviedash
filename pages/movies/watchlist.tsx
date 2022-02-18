@@ -2,12 +2,14 @@ import Head from 'next/head';
 import React, { ReactElement } from 'react';
 import { IoRemoveCircleOutline } from 'react-icons/io5';
 import MovieCardItem from '../../components/MovieCardItem';
+import useLocalStorage from '../../src/hooks/useLocalStorage';
 import { Movie } from '../../src/types/types';
 import { useWatchlistStoreContext } from '../../src/utils/WatchlistStore';
 
 function Watchlist(): ReactElement {
   const { store, dispatch } = useWatchlistStoreContext();
-  
+  const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
+
   if (store.watchlist.length === 0) {
     return (
       <main className="">
@@ -39,6 +41,8 @@ function Watchlist(): ReactElement {
   ): void => {
     e.preventDefault();
     dispatch({ type: 'RemoveFromWatchList', movie });
+    const watchlistPrep: Movie[] = [...store.watchlist];
+    setWatchlist(watchlistPrep.filter((el) => el !== movie));
   };
 
   return (
@@ -49,7 +53,7 @@ function Watchlist(): ReactElement {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="container mx-auto">
-        <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500 mb-14">
+        <h1 className="mt-12 mb-14 text-center text-5xl font-black tracking-wider text-indigo-500">
           Your Watchlist
         </h1>
         <div className="container mx-auto mt-14 flex flex-row flex-wrap justify-around gap-x-8 gap-y-10">
