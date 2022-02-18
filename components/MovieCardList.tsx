@@ -8,6 +8,7 @@ interface Props {
 }
 
 function MovieCardList({ movies }: Props): ReactElement {
+  if (!movies) return <LoadingSpinner />;
   if (movies.length === 0) return <LoadingSpinner />;
 
   return (
