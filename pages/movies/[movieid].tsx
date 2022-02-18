@@ -151,6 +151,6 @@ function MovieDetails({ query }: Props): ReactElement {
 
 export default MovieDetails;
 
-MovieDetails.getInitialProps = ({ query }: any) => {
+MovieDetails.getServerSideProps = ({ query }: any) => {
   return { query };
 };
