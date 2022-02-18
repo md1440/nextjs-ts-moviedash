@@ -40,11 +40,12 @@ function MovieQuery({
   onReset,
 }: Props): ReactElement {
 
-  // *** search functionality
+  // *** Search functionality
   const onSearch = (searchstr: string): void => {
     setSearchTerm(searchstr);
   };
 
+  // *** Debounce Functionality
   const debouncedSearchTerm: string = useDebounce(searchTerm, 700);
 
   useEffect((): void => {

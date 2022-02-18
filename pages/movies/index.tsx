@@ -48,6 +48,7 @@ function MovieList({ query }: Props): ReactElement {
     `&searchall=`,
   );
 
+  // *** State for searchTerm of Search funct in <Moviequery />
   const [searchTerm, setSearchTerm] = useState(searchResults);
 
   // *** Building the querystr

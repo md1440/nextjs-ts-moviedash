@@ -10,7 +10,7 @@ interface Props {
   children?: ReactElement;
 }
 
-// children comes in from watchlist.tsx -> renders a delete from watchlist component
+// children comes in from watchlist.tsx -> renders a delete funct from watchlist component
 
 function MovieCardItem({ movie, children }: Props): ReactElement {
   return (
