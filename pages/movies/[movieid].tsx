@@ -24,7 +24,7 @@ function MovieDetails({ query }: Props): ReactElement {
   const { store, dispatch } = useWatchlistStoreContext();
 
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`/${query.movieid}`);
+  const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
   // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
 
@@ -53,7 +53,7 @@ function MovieDetails({ query }: Props): ReactElement {
   const onDelete = () => {
     movieApi(
       'delete',
-      `/${query.movieid}`,
+      `/${query.movieId}`,
       () => replace('/movies'),
     );
   };
@@ -127,7 +127,7 @@ function MovieDetails({ query }: Props): ReactElement {
                 onClick={() =>
                   push(
                     `/movies/edit/${
-                      query.movieid
+                      query.movieId
                     }`,
                   )
                 }
