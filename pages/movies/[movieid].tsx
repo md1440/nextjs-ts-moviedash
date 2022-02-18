@@ -22,7 +22,7 @@ function MovieDetails({ query }: Props): ReactElement {
   const { back, push, replace } = useRouter();
   const [watchlist, setWatchlist] = useLocalStorage<Movie[]>('watchlist', []);
   const { store, dispatch } = useWatchlistStoreContext();
-  console.log(query)
+  console.log('MovieDetail', query)
   
   // *** Get movie api call, useState
   const [movie] = useMovieApi<Movie>(`/${query.movieid}`);
