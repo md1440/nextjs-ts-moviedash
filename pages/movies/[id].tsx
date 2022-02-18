@@ -34,8 +34,7 @@ function MovieDetails({ query }: Props): ReactElement {
   // *** Add to Watchlist
   const onAddToWatchList = () => {
     dispatch({ type: 'AddToWatchList', movie });
-    const watchlistPrep: Movie[] = [...store.watchlist, movie];
-    setWatchlist(watchlistPrep);
+    setWatchlist([...store.watchlist, movie]);
   };
 
   // *** Modal functionality + blur functionality when Modal isOpen
