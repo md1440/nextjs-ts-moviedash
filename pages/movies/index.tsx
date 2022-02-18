@@ -18,6 +18,8 @@ interface Props {
 }
 
 function MovieList({ query }: Props): ReactElement {
+  console.log(query);
+
   // *** Building the Query
   const [pageQuery, pageIndex, setPageIndex] = useQuery(
     query.page || '1',

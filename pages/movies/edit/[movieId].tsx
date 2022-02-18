@@ -11,8 +11,9 @@ interface Props {
   query: any;
 }
 
-function MovieEdit({query}: Props): ReactElement {
+function MovieEdit({ query }: Props): ReactElement {
   const { back, asPath, push, replace } = useRouter();
+  console.log(query.movieid);
 
   // *** Get movie api call, useState
   const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
