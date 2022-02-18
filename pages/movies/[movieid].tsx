@@ -25,7 +25,7 @@ function MovieDetails({ query }: Props): ReactElement {
   console.log(query)
   
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${query.movieid}`);
   // *** Modal is Open/Closed useState
   const [isOpen, setIsOpen] = useState(false);
 

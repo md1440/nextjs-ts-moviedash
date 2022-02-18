@@ -15,7 +15,7 @@ function MovieEdit({query}: Props): ReactElement {
   const { back, asPath, push, replace } = useRouter();
 
   // *** Get movie api call, useState
-  const [movie] = useMovieApi<Movie>(`/${query.movieId}`);
+  const [movie] = useMovieApi<Movie>(`/${query.movied}`);
 
   if (!movie) {
     return <LoadingSpinner />;
