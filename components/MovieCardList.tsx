@@ -4,7 +4,7 @@ import LoadingSpinner from './LoadingSpinner';
 import MovieCardItem from './MovieCardItem';
 
 interface Props {
-  movies: Movie[];
+  movies: Movie[] | undefined;
 }
 
 function MovieCardList({ movies }: Props): ReactElement {

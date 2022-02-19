@@ -18,9 +18,7 @@ function Layout({ Component, pageProps }: Props): ReactElement {
           <NavBar />
         </header>
         <div className="max-w-8xl bg container mx-auto min-h-screen px-24 pb-12 ">
-          <div>
-            <Component {...pageProps} />
-          </div>
+          <Component {...pageProps} />
         </div>
         <footer className="h-40 bg-indigo-400" />
       </div>

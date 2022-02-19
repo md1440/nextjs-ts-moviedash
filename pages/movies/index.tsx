@@ -104,12 +104,8 @@ function MovieList({ query }: Props): ReactElement {
           setSearchResults={setSearchResults}
           onReset={onReset}
         />
-        {movies && (
-          <>
-            <MovieCardList movies={movies} />
-            <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
-          </>
-        )}
+        <MovieCardList movies={movies} />
+        <Pagination pageIndex={pageIndex} setPageIndex={setPageIndex} />
       </main>
     </div>
   );
