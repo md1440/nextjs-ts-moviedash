@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-redeclare */
 import { createContext, ReactElement, useContext, useReducer } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-
 import { Movie } from '../types/types';
 
 export interface Store {

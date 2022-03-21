@@ -11,9 +11,9 @@ function NavBar(): ReactElement {
         <Link href="/" passHref>
           <li className="cursor-pointer px-3 py-4">Home</li>
         </Link>
-        <Link href="/movies" passHref>
+        {/* <Link href="/movies" passHref>
           <li className="cursor-pointer px-3 py-4">All Movies</li>
-        </Link>
+        </Link> */}
         <Link href="/movies/add" passHref>
           <li className="cursor-pointer px-3 py-4">Create Movie</li>
         </Link>

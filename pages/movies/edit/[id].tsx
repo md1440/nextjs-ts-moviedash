@@ -31,7 +31,7 @@ function MovieEdit({ query }: Props): ReactElement {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
           Edit this Movie in the Database
         </h1>
@@ -87,7 +87,7 @@ function MovieEdit({ query }: Props): ReactElement {
           metacritic={movie.metacritic?.toString() || ''}
           isEdit
         />
-      </main>
+      </div>
     </div>
   );
 }

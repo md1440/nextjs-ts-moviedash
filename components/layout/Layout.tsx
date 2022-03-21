@@ -17,10 +17,10 @@ function Layout({ Component, pageProps }: Props): ReactElement {
         <header className="">
           <NavBar />
         </header>
-        <div className="max-w-8xl bg container mx-auto min-h-screen px-24 pb-12 ">
+        <main className="max-w-8xl bg container mx-auto min-h-[65vh] px-24 pb-12 ">
           <Component {...pageProps} />
-        </div>
-        <footer className="h-40 bg-indigo-400" />
+        </main>
+        <footer className="h-[25vh] bg-indigo-400" />
       </div>
     </WatchlistStoreProvider>
   );

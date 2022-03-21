@@ -45,11 +45,11 @@ function Watchlist(): ReactElement {
 
   if (store.watchlist.length === 0) {
     return (
-      <main className="">
+      <div className="">
         <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
           Your watchlist is currently empty...
         </h1>
-      </main>
+      </div>
     );
   }
 
@@ -60,7 +60,7 @@ function Watchlist(): ReactElement {
         <meta name="description" content="Your Watchlist" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="container mx-auto">
+      <div className="container mx-auto">
         <h1 className="mt-12 mb-14 text-center text-5xl font-black tracking-wider text-indigo-500">
           Your Watchlist
         </h1>
@@ -82,7 +82,7 @@ function Watchlist(): ReactElement {
             </MovieCardItem>
           ))}
         </div>
-      </main>
+      </div>
     </div>
   );
 }

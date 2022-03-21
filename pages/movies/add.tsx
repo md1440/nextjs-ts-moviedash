@@ -10,7 +10,7 @@ function AddMovie(): ReactElement {
         <meta name="description" content="A list of all Movies" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main>
+      <div>
         <h1 className="mt-12 text-center text-5xl font-black tracking-wider text-indigo-500">
           Add a Movie to the Database
         </h1>
@@ -47,7 +47,7 @@ function AddMovie(): ReactElement {
           metacritic=""
           isEdit={false}
         />
-      </main>
+      </div>
     </div>
   );
 }

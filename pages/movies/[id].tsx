@@ -69,7 +69,7 @@ function MovieDetails({ query }: Props): ReactElement {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="mt-20 rounded-lg bg-indigo-100 shadow-lg">
+      <div className="mt-20 rounded-lg bg-indigo-100 shadow-lg">
         <div className="relative flex min-h-fit flex-row justify-between rounded-t-lg">
           <div className="basis-4/12 py-20 pl-20">
             {movie.poster && (
@@ -154,7 +154,7 @@ function MovieDetails({ query }: Props): ReactElement {
             />
           </Dialog>
         </Transition>
-      </main>
+      </div>
     </div>
   );
 }

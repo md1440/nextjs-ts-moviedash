@@ -14,9 +14,9 @@ function MovieSearch(): ReactElement {
   const [searchResults, setSearchResults] = useState<Movie[] | null>();
 
   // *** Search Functionality
-  // 1) onSearch -> setSearchterm 
+  // 1) onSearch -> setSearchterm
   // 2) debouncedSearchTerm -> useDebounce
-  // 3) useEffect -> debounce call api -> setSearchResults || resetSearchResults 
+  // 3) useEffect -> debounce call api -> setSearchResults || resetSearchResults
   const onSearch = (searchstr: string): void => {
     setSearchTerm(searchstr);
   };
@@ -37,15 +37,17 @@ function MovieSearch(): ReactElement {
   }, [debouncedSearchTerm]);
 
   const onClick = (movie: Movie) => {
+    console.log('click');
     setSearchResults(null);
     setSearchTerm('');
     router.push(`/movies/${movie._id}`);
   };
 
-  const onBlur = ()=> {
-    setSearchResults(null);
-    setSearchTerm('');
-  }
+  // *** -> breaks onClick functionality
+  // const onBlur = () => {
+  //   setSearchResults(null);
+  //   setSearchTerm('');
+  // };
 
   return (
     <div className="relative">
@@ -58,7 +60,7 @@ function MovieSearch(): ReactElement {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               onSearch(e.target.value)
             }
-            onBlur={onBlur}
+            // onBlur={onBlur}
             className="w-max border border-indigo-600 px-5 py-2.5 text-left text-sm font-medium tracking-wide text-indigo-700 hover:bg-opacity-25 hover:text-indigo-600 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-300"
           />
           <span className="z-40 ml-[-25px]">
@@ -69,17 +71,21 @@ function MovieSearch(): ReactElement {
       <div className="absolute right-28 top-16 z-40 flex w-72 flex-col gap-2 text-[13px] drop-shadow-md">
         {searchResults &&
           searchResults
-            .sort((a: Movie, b: Movie): number => b.year - a.year)
-            .sort((a: Movie, b: Movie): number =>
-              a.imdb.rating && b.imdb.rating
-                ? b.imdb.rating - a.imdb.rating
-                : a.title.length - b.title.length,
+            .sort((a: Movie, b: Movie): number => b.year - a.year) // sort for descending
+            .sort(
+              (
+                a: Movie,
+                b: Movie,
+              ): number => // sort for rating descending or length ascending
+                a.imdb.rating && b.imdb.rating
+                  ? b.imdb.rating - a.imdb.rating
+                  : a.title.length - b.title.length,
             )
-            .slice(0, 15)
+            .slice(0, 15) // restrict to 15 results
             .map((movie: Movie) => (
               <div
-                key={movie._id}
                 onClick={() => onClick(movie)}
+                key={movie._id}
                 className="w-96 rounded-lg border border-indigo-400 bg-white px-2 py-2 transition-shadow duration-300 ease-in-out hover:bg-indigo-100 focus:ring-4 focus:ring-indigo-300 dark:border-indigo-500 dark:text-indigo-500 dark:hover:bg-indigo-600 dark:hover:text-white dark:focus:ring-indigo-800"
               >
                 <span className="cursor-pointer border-b">
@@ -112,7 +118,5 @@ function MovieSearch(): ReactElement {
     </div>
   );
 }
-
-
 
 export default MovieSearch;
