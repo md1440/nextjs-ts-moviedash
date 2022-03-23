@@ -1,6 +1,6 @@
 # MovieDash NextJS Frontend
 > A NextJS Movie DB Frontend built upon my [_MovieDB Rest Api_](https://moviedb-rest-api.herokuapp.com/api/v1/movies).
-> Live demo [_here_](https://github.com/md1440/nextjs-ts-moviedash). 
+> Live demo [_here_](https://nextjs-ts-moviedash.vercel.app). 
 
 ## Table of Contents
 - [](#)
