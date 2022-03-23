@@ -21,8 +21,6 @@
 ## General Information
 - Final project of my React Developer Course (4w fulltime) with alfatraining GmbH
 - My inspiration was to explore frontend development with nextjs utilizing my existing movie api
-- 
-
 
 
 ## Technologies Used
