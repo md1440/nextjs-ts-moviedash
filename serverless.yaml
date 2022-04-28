@@ -1,0 +1,11 @@
+myNextApplication:
+  component: "@sls-next/serverless-component@3.6.0"
+  inputs:
+    bucketName: nextjs-moviedash-serverlessdeploybucket
+    bucketRegion: eu-central-1
+    name:
+      defaultLambda: nextjs-moviedash-defaultLambda
+      apiLambda: nextjs-moviedash-apiLambda
+      imageLambda: nextjs-moviedash-imageLambda
+
+  # deploy with npx serverless@2.72.2
