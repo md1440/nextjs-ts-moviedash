@@ -17,6 +17,7 @@ interface Props {
   query: any;
 }
 
+// TODO - Implement getStaticProps
 function MovieList({ query }: Props): ReactElement {
   // *** Building the Query
   const [pageQuery, pageIndex, setPageIndex] = useQuery(
